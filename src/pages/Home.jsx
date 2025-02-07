@@ -48,7 +48,6 @@ function Home() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(2);
 
-
   // صفحه بندی
 
   const handleChangePage = (newPage) => {
@@ -60,16 +59,13 @@ function Home() {
     setPage(0);
   };
 
-
-
   //  حذف کردن کار ها
 
   const handelDelete = (id) => {
     dispatch(deleteTask({ id }));
   };
 
-  
-//  فیلتر کردن
+  //  فیلتر کردن
   const toggleDrawer = (newFilter) => () => {
     setFilter(newFilter);
   };
@@ -93,9 +89,18 @@ function Home() {
 
   return (
     <>
-      <div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "between",
+          alignItems: "center",
+          background:"#4f39f6"
+        }}
+      >
         <div>
-          <h1>لیست کارها</h1>
+          <h1>
+            لیست کارها
+          </h1>
         </div>
         <div>
           <Tooltip title="اضافه">
@@ -116,20 +121,33 @@ function Home() {
               <FilterAltOutlinedIcon />
             </IconButton>
           </Tooltip>
-          <input
-            type="text"
-            placeholder="جستجو"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <div>
-            <Tooltip title="جستجو">
-              <IconButton aria-label="search" size="small">
-                <SearchIcon />
-              </IconButton>
-            </Tooltip>
+          <div
+            sx={{ display: "flex", position: "relative", alignItems: "center" }}
+          >
+            <input
+              type="text"
+              placeholder="جستجو"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div
+              sx={{
+                height: "100%",
+                position: "absolute",
+                pointerEvents: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Tooltip title="جستجو">
+                <IconButton aria-label="search" size="small">
+                  <SearchIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
           </div>
         </div>
-      </div>
+      </Box>
       <TableContainer>
         <Table sx={{ borderCollapse: "collapse" }}>
           <TableHead sx={{ background: "#d1d5dc" }}>
@@ -173,10 +191,8 @@ function Home() {
                   <TableCell>
                     <div>
                       <Tooltip title="حذف">
-                        <IconButton
-                        onClick={() => handelDelete(task.id)}>
-                          <DeleteIcon  />
-                          
+                        <IconButton onClick={() => handelDelete(task.id)}>
+                          <DeleteIcon />
                         </IconButton>
                       </Tooltip>
 
@@ -289,7 +305,7 @@ function Home() {
                   <FilterAltOutlinedIcon />
                   <div className="bg-white">
                     <h2 className="font-bold whitespace-nowrap ">
-                    لیست کار های من
+                      لیست کار های من
                     </h2>
                     <h4 className="font-thin  text-sm">فیلتر ها</h4>
                   </div>
@@ -335,7 +351,7 @@ function Home() {
         count={100}
         page={page}
         dir="rtl"
-        labelRowsPerPage= "ردیف در هر صفحه"
+        labelRowsPerPage="ردیف در هر صفحه"
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
