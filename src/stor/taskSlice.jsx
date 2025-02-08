@@ -16,11 +16,11 @@ const taskSlice = createSlice({
     filter:"all",
     reducers:{
       addTask: (state, action) => {
+        console.log("------>>", state, action)
        state.push(action.payload);
 
       },
       editTask: (state, action) => {
-
         console.log("action.payload------>", action.payload)
         const index = state.findIndex(task => task.id === action.payload.id);
         console.log("2======>" , state[index])
@@ -52,7 +52,7 @@ const taskSlice = createSlice({
         
 
     },
-    filterTask: (state, action) => {
+    setFilter: (state, action) => {
       state.filter = action.payload;
     },
     resetTask: (state) => {
@@ -60,5 +60,5 @@ const taskSlice = createSlice({
     }
   }
 })
-export const {addTask, editTask,deleteTask, filterTask, resetTask} = taskSlice.actions;
+export const {addTask, editTask,deleteTask, setFilter, resetTask} = taskSlice.actions;
 export default taskSlice.reducer;

@@ -1,29 +1,93 @@
 import {
+  alpha,
+  AppBar,
   Backdrop,
   Box,
+  Button,
   Drawer,
+  FormControl,
   IconButton,
+  InputBase,
+  InputLabel,
   List,
   ListItem,
+  MenuItem,
+  Select,
+  styled,
   Table,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Toolbar,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { addTask, deleteTask } from "../stor/taskSlice";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
+import EditTask from "../components/EditTask";
+import MenuIcon from '@mui/icons-material/Menu';
+
 // import EditTask from "../components/EditTask";
+
+
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  left:0,
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  width: '100%',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
+
+
+
+
+// 
 
 const style = {
   position: "absolute",
@@ -89,20 +153,36 @@ function Home() {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "between",
-          alignItems: "center",
-          background:"#4f39f6"
-        }}
-      >
-        <div>
-          <h1>
-            لیست کارها
-          </h1>
-        </div>
-        <div>
+      <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ ml: 1 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            لیست کار های من
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="جستجو..."
+              onChange={(e) => setSearch(e.target.value)}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           <Tooltip title="اضافه">
             <IconButton
               aria-label="add"
@@ -121,33 +201,10 @@ function Home() {
               <FilterAltOutlinedIcon />
             </IconButton>
           </Tooltip>
-          <div
-            sx={{ display: "flex", position: "relative", alignItems: "center" }}
-          >
-            <input
-              type="text"
-              placeholder="جستجو"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <div
-              sx={{
-                height: "100%",
-                position: "absolute",
-                pointerEvents: "none",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Tooltip title="جستجو">
-                <IconButton aria-label="search" size="small">
-                  <SearchIcon />
-                </IconButton>
-              </Tooltip>
-            </div>
-          </div>
-        </div>
-      </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+     
       <TableContainer>
         <Table sx={{ borderCollapse: "collapse" }}>
           <TableHead sx={{ background: "#d1d5dc" }}>
@@ -196,13 +253,7 @@ function Home() {
                         </IconButton>
                       </Tooltip>
 
-                      <Link to={`/edit/${task.id}`}>
-                        <Tooltip title="Edit">
-                          <IconButton>
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </Link>
+                      <EditTask task={task} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -247,21 +298,22 @@ function Home() {
                   className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
                   name="اولویت"
                 >
-                  <option value="">اولویت</option>
-                  <option value="High">زیاد</option>
-                  <option value="Medium">متوسط</option>
-                  <option value="Low">کم</option>
+                  <option value="اولویت">اولویت</option>
+                  <option value="زیاد">زیاد</option>
+                  <option value="متوسط">متوسط</option>
+                  <option value="کم">کم</option>
                 </select>
+
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                   className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
                   name="وضعیت"
                 >
-                  <option value="">وضعیت</option>
-                  <option value="Todo">کار</option>
-                  <option value="Doing">در حال انجام</option>
-                  <option value="Done">انجام شد</option>
+                  <option value="وضعیت">وضعیت</option>
+                  <option value="کار">کار</option>
+                  <option value="در حال انجام">در حال انجام</option>
+                  <option value="انجام شد">انجام شد</option>
                 </select>
                 <input
                   value={date}
@@ -300,45 +352,79 @@ function Home() {
         <Box sx={{ width: 250 }} role="presentation">
           <List>
             <ListItem>
-              <div className="fixed top-6 right-1/2 translate-x-1/2 min-h-screen w-72  flex gap-10  flex-col bg-white">
-                <div className="flex gap-4 justify-around items-center w-28">
-                  <FilterAltOutlinedIcon />
-                  <div className="bg-white">
-                    <h2 className="font-bold whitespace-nowrap ">
+              <div>
+                <div>
+                  <IconButton size="small">
+                    <FilterAltOutlinedIcon />
+                  </IconButton>
+
+                  <div sx={{ bgcolor: "white", ml: "40px" }}>
+                    <h3
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "10px",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       لیست کار های من
-                    </h2>
-                    <h4 className="font-thin  text-sm">فیلتر ها</h4>
+                    </h3>
+                    <h4
+                      sx={{
+                        fontWeight: "light",
+                        fontSize: "14px",
+                        textAlign: "center",
+                      }}
+                    >
+                      فیلتر ها
+                    </h4>
                   </div>
                 </div>
-                <div className="w-full h-[1px] bg-slate-300 my-4 rounded-xl"></div>
 
-                <div className="flex flex-col gap-10 ">
-                  <div className="flex gap-4 justify-between">
-                    <div>
-                      <select className="cursor-pointer w-40 border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6">
-                        <option value="All">همه</option>
-                        <option value="High">زیاد</option>
-                        <option value="Medium">متوسط</option>
-                        <option value="Low">کم</option>
-                      </select>
-                    </div>
-                    <div>
-                      <select
-                        id="status"
-                        className="cursor-pointer w-40 border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
+                <div >
+                  <div>
+                    <div></div>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <InputLabel id="demo-simple-select-helper-label">
+                        همه
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
                       >
-                        <option value="All">همه</option>
-                        <option value="Todo">کار</option>
-                        <option value="Doing">در حال انجام</option>
-                        <option value="Done">انجام شد</option>
-                      </select>
+                        <MenuItem value="همه">همه</MenuItem>
+                        <MenuItem value="زیاد">زیاد</MenuItem>
+                        <MenuItem value="متوسط">متوسط</MenuItem>
+                        <MenuItem value="کم">کم</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <div>
+                      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                        <InputLabel id="demo-simple-select-helper-label">
+                          همه
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                        >
+                          <MenuItem value="همه">همه</MenuItem>
+                          <MenuItem value="کار">کار</MenuItem>
+                          <MenuItem value="در حال انجام">در حال انجام</MenuItem>
+                          <MenuItem value="انجام">انجام</MenuItem>
+                        </Select>
+                      </FormControl>
                     </div>
                   </div>
-                  <div className="flex mt-2 justify-center text-center">
-                    <button className="w-18 border border-indigo-400  hover:bg-indigo-500 hover:text-white rounded-md py-2 px-2 text-md font-semibold mt-10">
-                      Reset
-                    </button>
-                  </div>
+
+                  <Button
+                    sx={{
+                      display: "flex",
+                      textAlign: "center",
+                      mr: "35px",
+                    }}
+                    variant="contained"
+                  >
+                    reset
+                  </Button>
                 </div>
               </div>
             </ListItem>

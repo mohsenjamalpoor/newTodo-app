@@ -3,10 +3,11 @@
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
 
-
-import { MdEdit } from "react-icons/md";
+// import { MdEdit } from "react-icons/md";
 import { editTask } from "../stor/taskSlice";
+import { IconButton, Tooltip } from "@mui/material";
 
 
 function EditTask({ task }) {
@@ -47,10 +48,10 @@ function EditTask({ task }) {
               className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
               name="priority"
             >
-              <option value="">Priority</option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
+              <option value="اولویت">اولویت</option>
+              <option value="زیاد">زیاد</option>
+              <option value="متوسط">متوسط</option>
+              <option value="کم">کم</option>
             </select>
             <select
               value={status}
@@ -58,10 +59,10 @@ function EditTask({ task }) {
               className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
               name="status"
             >
-              <option value="">Status</option>
-              <option value="Todo">Todo</option>
-              <option value="Doing">Doing</option>
-              <option value="Done">Done</option>
+              <option value="وضعیت">وضعیت</option>
+              <option value="کار">کار</option>
+              <option value="در حال انجام">در حال انجام</option>
+              <option value="انجام شد">انجام شد</option>
             </select>
             <input
               value={date}
@@ -77,25 +78,28 @@ function EditTask({ task }) {
               className="bg-blue-500  hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
               onClick={handleEdit}
             >
-              Save
+              ذخیره 
             </button>
 
             <button
               onClick={() => setIsEditing(false)}
               className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded"
             >
-              Close
+              خروج
             </button>
           </div>
         </div>
       ) : (
         <>
-          <button
-            className="cursor-pointer text-4xl text-gray-300 hover:bg-green-300 rounded-full p-2"
-            onClick={() => setIsEditing(true)}
-          >
-            <MdEdit size={20} />
-          </button>
+          
+           <Tooltip title="Edit">
+                          <IconButton
+                           onClick={() => setIsEditing(true)}
+                           >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                
         </>
       )}
     </>
