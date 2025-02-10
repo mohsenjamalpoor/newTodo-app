@@ -33,7 +33,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 // import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import { addTask, deleteTask, updateFilterStatus } from "../stor/taskSlice";
+import { addTask, deleteTask } from "../stor/taskSlice";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
@@ -513,7 +513,7 @@ function Home() {
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                       <InputLabel id="demo-simple-select-helper-label">اولویت</InputLabel>
                       <Select
-                      
+                       
                    
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -545,6 +545,7 @@ function Home() {
                   </div>
 
                   <Button
+                  
                     sx={{
                       display: "flex",
                       textAlign: "center",
