@@ -7,30 +7,30 @@ import EditIcon from "@mui/icons-material/Edit";
 
 // import { MdEdit } from "react-icons/md";
 import { editTask } from "../stor/taskSlice";
-import { IconButton, Tooltip } from "@mui/material";
-
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 
 function EditTask({ task }) {
-  
   const [isEdit, setIsEditing] = useState(false);
   const [name, setName] = useState(task.name);
   const [date, setDate] = useState(task.date);
   const [priority, setPriority] = useState(task.priority);
 
-
   const [status, setStatus] = useState(task.status);
   const dispatch = useDispatch();
-  
+
   const handleEdit = () => {
     setIsEditing(false);
-    dispatch(editTask({id: task.id, name, priority, status, date }));
+    dispatch(editTask({ id: task.id, name, priority, status, date }));
   };
 
   return (
     <>
       {isEdit ? (
-        <div className="absolute bottom-60 left-120 bg-white p-4 border rounded-md shadow-lg z-10 text-center">
-          <h1 className="text-center text-xl font-bold mb-3 ">Edit Task</h1>
+        <Box sx={{position:'absolute', left:"480px", zIndex:2}} className="absolute bottom-60 left-120 bg-white p-4 border rounded-md shadow-lg z-10 text-center">
+          <Typography  variant="h3">
+
+          ویرایش
+          </Typography>
 
           <div className="grid grid-cols-1">
             <input
@@ -78,7 +78,7 @@ function EditTask({ task }) {
               className="bg-blue-500  hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
               onClick={handleEdit}
             >
-              ذخیره 
+              ذخیره
             </button>
 
             <button
@@ -88,18 +88,23 @@ function EditTask({ task }) {
               خروج
             </button>
           </div>
-        </div>
+        </Box>
       ) : (
         <>
-          
-           <Tooltip title="Edit">
-                          <IconButton
-                           onClick={() => setIsEditing(true)}
-                           >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                
+          <Tooltip
+            sx={[
+              {
+                "&:hover": {
+                  color: "green",
+                },
+              },
+            ]}
+            title="Edit"
+          >
+            <IconButton onClick={() => setIsEditing(true)}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
         </>
       )}
     </>

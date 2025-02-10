@@ -4,7 +4,7 @@ export const taskList = [
         name:"محسن",
         priority:"کم",
         status:"انجام شده",
-        date:"1403-11-17"
+        date:"03-11-17"
        
     }
 ]

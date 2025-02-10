@@ -19,6 +19,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Toolbar,
   Tooltip,
   Typography,
@@ -35,59 +36,58 @@ import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
 import EditTask from "../components/EditTask";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
+import _date from "../utils/_date";
+import dayjs from "dayjs";
+
+
 
 // import EditTask from "../components/EditTask";
 
-
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(1),
-    width: 'auto',
+    width: "auto",
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  left:0,
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  left: 0,
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
+  color: "inherit",
+  width: "100%",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
+    transition: theme.transitions.create("width"),
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
       },
     },
   },
 }));
 
-
-
-
-// 
+//
 
 const style = {
   position: "absolute",
@@ -104,7 +104,7 @@ const style = {
 function Home() {
   const [search, setSearch] = useState("");
   const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(dayjs());
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -119,7 +119,7 @@ function Home() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
 
@@ -145,66 +145,86 @@ function Home() {
         name,
         priority,
         status,
-        date,
+        date:_date(date),
       })
+
     );
+    setDate(dayjs());
     setShowModal(false);
   };
 
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ ml: 1 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            لیست کار های من
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="جستجو..."
-              onChange={(e) => setSearch(e.target.value)}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Tooltip title="اضافه">
+        <AppBar position="static">
+          <Toolbar>
             <IconButton
-              aria-label="add"
-              onClick={() => setShowModal(true)}
-              size="small"
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ ml: 1 }}
             >
-              <AddIcon fontSize="inherit" />
+              <MenuIcon />
             </IconButton>
-          </Tooltip>
-          <Tooltip title="فیلتر">
-            <IconButton
-              aria-label="filter"
-              onClick={toggleDrawer(true)}
-              size="small"
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
             >
-              <FilterAltOutlinedIcon />
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
-      </AppBar>
-    </Box>
-     
+              لیست کار های من
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="جستجو..."
+                onChange={(e) => setSearch(e.target.value)}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+            <Tooltip
+              sx={[
+                {
+                  "&:hover": {
+                    color: "#fff",
+                  },
+                },
+              ]}
+              title="اضافه"
+            >
+              <IconButton
+                aria-label="add"
+                onClick={() => setShowModal(true)}
+                size="small"
+              >
+                <AddIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              sx={[
+                {
+                  "&:hover": {
+                    color: "#fff",
+                  },
+                },
+              ]}
+              title="فیلتر"
+            >
+              <IconButton
+                aria-label="filter"
+                onClick={toggleDrawer(true)}
+                size="small"
+              >
+                <FilterAltOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          </Toolbar>
+        </AppBar>
+      </Box>
+
       <TableContainer>
         <Table sx={{ borderCollapse: "collapse" }}>
           <TableHead sx={{ background: "#d1d5dc" }}>
@@ -247,7 +267,16 @@ function Home() {
                   <TableCell>{task.date}</TableCell>
                   <TableCell>
                     <div>
-                      <Tooltip title="حذف">
+                      <Tooltip
+                        sx={[
+                          {
+                            "&:hover": {
+                              color: "red",
+                            },
+                          },
+                        ]}
+                        title="حذف"
+                      >
                         <IconButton onClick={() => handelDelete(task.id)}>
                           <DeleteIcon />
                         </IconButton>
@@ -263,6 +292,7 @@ function Home() {
       </TableContainer>
 
       {/* اضافه کردن کار */}
+
       <Modal
         open={showModal}
         onClose={() => setShowModal(false)}
@@ -277,72 +307,94 @@ function Home() {
         }}
       >
         <Box sx={style}>
+          <Typography
+            sx={{
+              textAlign: "center",
+              mb: "30px",
+            }}
+            variant="h4"
+          >
+            کار جدید
+          </Typography>
+
           <div>
-            <h1 className="text-center text-xl font-semibold text-gray-900 mb-5 ">
-              کار جدید
-            </h1>
             <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1">
-                <input
+              <div>
+                <TextField
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="نام کار"
-                  className="font-semibold px-2 text-md py-2 border border-gray-400 rounded-md"
+                  sx={{ width: "100%" }}
+                  size="small"
+                  variant="outlined"
                 />
               </div>
               <div>
-                <select
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value)}
-                  className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
-                  name="اولویت"
-                >
-                  <option value="اولویت">اولویت</option>
-                  <option value="زیاد">زیاد</option>
-                  <option value="متوسط">متوسط</option>
-                  <option value="کم">کم</option>
-                </select>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-select-small-label">اولویت</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                    label="اولویت"
+                  >
+                    <MenuItem value="زیاد">زیاد</MenuItem>
+                    <MenuItem value="متوسط">متوسط</MenuItem>
+                    <MenuItem value="کم">کم</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-select-small-label">وضعیت</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    label="وضعیت"
+                  >
+                    <MenuItem value="کار">کار</MenuItem>
+                    <MenuItem value="در حال انجام">در حال انجام</MenuItem>
+                    <MenuItem value="انجام شد">انجام شد</MenuItem>
+                  </Select>
+                </FormControl>
 
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
-                  name="وضعیت"
-                >
-                  <option value="وضعیت">وضعیت</option>
-                  <option value="کار">کار</option>
-                  <option value="در حال انجام">در حال انجام</option>
-                  <option value="انجام شد">انجام شد</option>
-                </select>
                 <input
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   type="date"
                   className="border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
                   name="date"
-                ></input>
-              </div>
-              <div
-                sx={{ mt: 2 }}
-                className="grid-cols-1	flex justify-between items-center mt-10 "
-              >
-                <button
-                  type="submit"
-                  className="bg-blue-500 cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                 >
+
+                  
+                </input>
+               
+              </div>
+              <Typography
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mt: 4,
+                }}
+                variant="div"
+              >
+                <Button variant="contained" type="submit">
                   ذخیره
-                </button>
+                </Button>
                 <Link to="/">
-                  <button
+                  <Button
+                    variant="outlined"
+                    color="error"
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded"
                   >
                     خروج
-                  </button>
+                  </Button>
                 </Link>
-              </div>
+              </Typography>
             </form>
           </div>
         </Box>
@@ -380,9 +432,8 @@ function Home() {
                   </div>
                 </div>
 
-                <div >
+                <div>
                   <div>
-                    <div></div>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                       <InputLabel id="demo-simple-select-helper-label">
                         همه
@@ -434,9 +485,9 @@ function Home() {
 
       <TablePagination
         component="div"
-        count={100}
+        count={20}
         page={page}
-        dir="rtl"
+        // sx={{dir}}
         labelRowsPerPage="ردیف در هر صفحه"
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}

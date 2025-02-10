@@ -14,6 +14,7 @@
     "dayjs": "^1.11.13",
     "jalali-dayjs": "^0.0.1",
     "jalali-moment": "^3.3.11",
+    "jalali-plugin-dayjs": "^1.1.4",
     "jalaliday": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
