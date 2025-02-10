@@ -7,7 +7,21 @@ import EditIcon from "@mui/icons-material/Edit";
 
 // import { MdEdit } from "react-icons/md";
 import { editTask } from "../stor/taskSlice";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import _date from "../utils/_date";
 
 function EditTask({ task }) {
   const [isEdit, setIsEditing] = useState(false);
@@ -20,74 +34,101 @@ function EditTask({ task }) {
 
   const handleEdit = () => {
     setIsEditing(false);
-    dispatch(editTask({ id: task.id, name, priority, status, date }));
+    dispatch(
+      editTask({ id: task.id, name, priority, status, date: _date(date) })
+    );
   };
 
   return (
     <>
       {isEdit ? (
-        <Box sx={{position:'absolute', left:"480px", zIndex:2}} className="absolute bottom-60 left-120 bg-white p-4 border rounded-md shadow-lg z-10 text-center">
-          <Typography  variant="h3">
-
-          ویرایش
-          </Typography>
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: "230px",
+            left: "420px",
+            border: "1px solid",
+            zIndex: 10,
+            textAlign: "center",
+            bgcolor: "#fff",
+            boxShadow: 3,
+            p: 4,
+            borderRadius: 4,
+          }}
+        >
+          <Typography variant="h4">ویرایش</Typography>
 
           <div className="grid grid-cols-1">
-            <input
+            <TextField
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              type="text"
-              placeholder="Task Name"
-              className="font-semibold px-2 text-md py-2 border border-gray-400 rounded-md"
+              placeholder="نام کار"
+              sx={{ width: "100%" }}
+              size="small"
+              variant="outlined"
             />
           </div>
           <div>
-            <select
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
-              name="priority"
-            >
-              <option value="اولویت">اولویت</option>
-              <option value="زیاد">زیاد</option>
-              <option value="متوسط">متوسط</option>
-              <option value="کم">کم</option>
-            </select>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="cursor-pointer border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
-              name="status"
-            >
-              <option value="وضعیت">وضعیت</option>
-              <option value="کار">کار</option>
-              <option value="در حال انجام">در حال انجام</option>
-              <option value="انجام شد">انجام شد</option>
-            </select>
-            <input
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small-label">اولویت</InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+                label="اولویت"
+              >
+                <MenuItem value="زیاد">زیاد</MenuItem>
+                <MenuItem value="متوسط">متوسط</MenuItem>
+                <MenuItem value="کم">کم</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small-label">وضعیت</InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                label="وضعیت"
+              >
+                <MenuItem value="کار">کار</MenuItem>
+                <MenuItem value="در حال انجام">در حال انجام</MenuItem>
+                <MenuItem value="انجام شد">انجام شد</MenuItem>
+              </Select>
+            </FormControl>
+            <Input
+              sx={{ height: "47px" }}
               value={date}
               onChange={(e) => setDate(e.target.value)}
               type="date"
-              className="border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
               name="date"
-            ></input>
+            />
           </div>
-          <div className="grid-cols-1	flex justify-between items-center mt-10 ">
-            <button
-              type="submit"
-              className="bg-blue-500  hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-              onClick={handleEdit}
-            >
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 4,
+            }}
+            variant="div"
+          >
+            <Button onClick={handleEdit} variant="contained" type="submit">
               ذخیره
-            </button>
-
-            <button
-              onClick={() => setIsEditing(false)}
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded"
-            >
-              خروج
-            </button>
-          </div>
+            </Button>
+            <Link to="/">
+              <Button
+                variant="outlined"
+                color="error"
+                type="button"
+                onClick={() => setIsEditing(false)}
+              >
+                خروج
+              </Button>
+            </Link>
+          </Typography>
         </Box>
       ) : (
         <>

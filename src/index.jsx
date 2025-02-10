@@ -5,9 +5,10 @@ import store from "./stor/store";
 import { Provider } from 'react-redux'
 import App from "./App";
 import dayjs from 'dayjs';
+import toObject from 'dayjs/plugin/toObject'
 import jalaliday from 'jalaliday';
 
-var toObject = require("dayjs/plugin/toObject");
+
 dayjs.extend(jalaliday);
 dayjs.extend(toObject);
 

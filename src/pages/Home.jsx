@@ -36,7 +36,7 @@ import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
 import EditTask from "../components/EditTask";
-import MenuIcon from "@mui/icons-material/Menu";
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import _date from "../utils/_date";
 import dayjs from "dayjs";
 
@@ -165,7 +165,7 @@ function Home() {
               aria-label="open drawer"
               sx={{ ml: 1 }}
             >
-              <MenuIcon />
+            <ChecklistRtlIcon/>
             </IconButton>
             <Typography
               variant="h6"
@@ -282,7 +282,7 @@ function Home() {
                         </IconButton>
                       </Tooltip>
 
-                      <EditTask task={task} />
+                      <EditTask showModal={showModal} setShowModal={setShowModal} task={task} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -360,11 +360,12 @@ function Home() {
                   </Select>
                 </FormControl>
 
+                
                 <input
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   type="date"
-                  className="border border-gray-400 rounded-md py-2 px-2 text-md font-semibold mt-6"
+                
                   name="date"
                 >
 
