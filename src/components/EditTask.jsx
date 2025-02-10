@@ -45,8 +45,8 @@ function EditTask({ task }) {
         <Box
           sx={{
             position: "absolute",
-            bottom: "230px",
-            left: "420px",
+            right:"35%",
+            top:'40%',
             border: "1px solid",
             zIndex: 10,
             textAlign: "center",
@@ -54,6 +54,7 @@ function EditTask({ task }) {
             boxShadow: 3,
             p: 4,
             borderRadius: 4,
+  
           }}
         >
           <Typography variant="h4">ویرایش</Typography>

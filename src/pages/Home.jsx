@@ -107,8 +107,8 @@ function Home() {
   const [status, setStatus] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(2);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
 
   // صفحه بندی
 
@@ -117,7 +117,7 @@ function Home() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 5));
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -545,14 +545,17 @@ function Home() {
       </Drawer>
 
       <TablePagination
+        rowsPerPageOptions={[5, 10, 15]}
+
         component="div"
-        count={20}
+        count={tasks.length}
         page={page}
-        // sx={{dir}}
-        labelRowsPerPage="ردیف در هر صفحه"
+        labelRowsPerPage="تعداد سطر در هر صفحه"
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        labelDisplayedRows={({from, to, count}) => `${from} - ${to} از ${count}` }
+        sx={{direction:'ltr', "& .MuiTablePagination-actions":{direction:"rtl"}}}
       />
     </>
   );
