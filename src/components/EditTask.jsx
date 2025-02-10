@@ -45,15 +45,16 @@ function EditTask({ task }) {
         <Box
           sx={{
             position: "absolute",
-            right:"35%",
-            top:'40%',
+            left:"50%",
+            top:'50%',
             border: "1px solid",
             zIndex: 10,
             textAlign: "center",
             bgcolor: "#fff",
-            boxShadow: 3,
+            boxShadow: 24,
             p: 4,
             borderRadius: 4,
+            transform: "translate(-50%, -50%)",
   
           }}
         >

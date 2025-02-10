@@ -4,9 +4,11 @@ import {
   Backdrop,
   Box,
   Button,
+  Divider,
   Drawer,
   FormControl,
   IconButton,
+  Input,
   InputBase,
   InputLabel,
   List,
@@ -31,7 +33,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 // import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import { addTask, deleteTask } from "../stor/taskSlice";
+import { addTask, deleteTask, updateFilterStatus } from "../stor/taskSlice";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
@@ -92,9 +94,9 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  borderRadius: 4,
+  bgcolor: "#fff",
+  border: "2px solid",
   boxShadow: 24,
   p: 4,
 };
@@ -110,14 +112,20 @@ function Home() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
 
+  
+
+
+
+  
+
   // صفحه بندی
 
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(+event.target.value, 10));
     setPage(0);
   };
 
@@ -233,6 +241,7 @@ function Home() {
                 نام{" "}
               </TableCell>
               <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
+                
                 اولویت
               </TableCell>
               <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
@@ -253,7 +262,7 @@ function Home() {
                   ? task
                   : task.name.toLocaleLowerCase().includes(search);
               })
-              .map((task, index) => (
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((task, index) => (
                 <TableRow key={task.id}>
                   <TableCell sx={{textAlign:'center',borderLeft: "1px solid #9e9e9e"}}>{index + 1}</TableCell>
                   <TableCell sx={{ textAlign: "center", borderLeft: "1px solid #9e9e9e" }}>
@@ -271,7 +280,7 @@ function Home() {
                         fontSize: "18px",
                         textAlign: "center",
                         color: "#fff",
-                        borderRadius: 2,
+                        borderRadius: 5,
                         pr: 3,
                         pl: 3,
                         pb: 1,
@@ -294,12 +303,12 @@ function Home() {
                         fontSize: "18px",
                         textAlign: "center",
                         color: "#fff",
-                        borderRadius: 2,
+                        borderRadius: 5,
                         pr: 3,
                         pl: 3,
                         pb: 1,
                         pt: 1,
-                        
+                       
                       }}
                     >
                       {task.status}
@@ -426,12 +435,13 @@ function Home() {
                   </Select>
                 </FormControl>
 
-                <input
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  type="date"
-                  name="date"
-                ></input>
+                <Input
+              sx={{ height: "47px" }}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              type="date"
+              name="date"
+            />
               </div>
               <Typography
                 sx={{
@@ -481,27 +491,33 @@ function Home() {
                     >
                       لیست کار های من
                     </h3>
-                    <h4
-                      sx={{
-                        fontWeight: "light",
-                        fontSize: "14px",
-                        textAlign: "center",
-                      }}
-                    >
-                      فیلتر ها
-                    </h4>
+                    <Typography
+                     sx={{
+                      fontWeight: "light",
+                      fontSize: "14px",
+                      textAlign: "center",
+                    }}
+                    variant="h2">
+
+                    فیلتر ها
+                    </Typography>
+                   
                   </div>
                 </div>
+                 
+
+                    <Divider sx={{ my: 2 }} />
 
                 <div>
                   <div>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                      <InputLabel id="demo-simple-select-helper-label">
-                        همه
-                      </InputLabel>
+                      <InputLabel id="demo-simple-select-helper-label">اولویت</InputLabel>
                       <Select
+                      
+                   
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
+                        label="اولویت"
                       >
                         <MenuItem value="همه">همه</MenuItem>
                         <MenuItem value="زیاد">زیاد</MenuItem>
@@ -512,11 +528,12 @@ function Home() {
                     <div>
                       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                         <InputLabel id="demo-simple-select-helper-label">
-                          همه
+                          وضعیت
                         </InputLabel>
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
+                          label="وضعیت"
                         >
                           <MenuItem value="همه">همه</MenuItem>
                           <MenuItem value="کار">کار</MenuItem>
@@ -555,7 +572,7 @@ function Home() {
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         labelDisplayedRows={({from, to, count}) => `${from} - ${to} از ${count}` }
-        sx={{direction:'ltr', "& .MuiTablePagination-actions":{direction:"rtl"}}}
+        sx={{direction:'rtl', "& .MuiTablePagination-actions":{direction:"ltr"}}}
       />
     </>
   );

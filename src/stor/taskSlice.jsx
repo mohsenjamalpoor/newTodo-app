@@ -2,7 +2,7 @@
 
 
  import { createSlice } from "@reduxjs/toolkit";
-
+ import { v4 as uuidv4 } from 'uuid';
 import { taskList } from "../statics/Data";
 
 
@@ -14,11 +14,15 @@ const taskSlice = createSlice({
     name:"tasks",
     
     initialState:taskList,
-    filter:"all",
+    filter:'همه',
+      
+    
     reducers:{
       addTask: (state, action) => {
         console.log("------>>", state, action)
-       state.push(action.payload);
+        const uuid = uuidv4()
+        console.log("uuidv4", uuid)
+        state.push({...action.payload, id:uuid})
 
       },
       editTask: (state, action) => {
@@ -28,23 +32,15 @@ const taskSlice = createSlice({
         if (index !== -1) {
           state[index] = action.payload;
         }
-      //  const {id, name, priority, status, date } = action.payload;
-      //  state.tasks = state.tasks.map(task => (
-        // task.id === action.payload.id ? action.payload : task
-      //  ))
-      //  const uu = state.find(task => task.id === id);
-      //  if(uu) {
-      //   uu.name = name;
-      //   uu.priority = priority;
-      //   uu.status = status;
-      //   uu.date = date
+    
+    
 
-      //  }
+        
 
       },
       deleteTask: (state, action) => {
 
-        // state.tasks = state.tasks.filter(task => task.id !== action.payload);
+        
         const {id} = action.payload;
         const uu = state.find(task => task.id === id);
         if(uu){
@@ -53,7 +49,7 @@ const taskSlice = createSlice({
         
 
     },
-    setFilter: (state, action) => {
+    updateFilterStatus: (state, action) => {
       state.filter = action.payload;
     },
     resetTask: (state) => {
@@ -61,5 +57,5 @@ const taskSlice = createSlice({
     }
   }
 })
-export const {addTask, editTask,deleteTask, setFilter, resetTask} = taskSlice.actions;
+export const {addTask, editTask,deleteTask, updateFilterStatus, resetTask} = taskSlice.actions;
 export default taskSlice.reducer;
