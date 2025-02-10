@@ -2,7 +2,7 @@
 
 
  import { createSlice } from "@reduxjs/toolkit";
-// import { v4 as uuidv4 } from 'uuid';
+
 import { taskList } from "../statics/Data";
 
 
@@ -12,6 +12,7 @@ import { taskList } from "../statics/Data";
 
 const taskSlice = createSlice({
     name:"tasks",
+    
     initialState:taskList,
     filter:"all",
     reducers:{

@@ -95,7 +95,7 @@ function EditTask({ task }) {
               >
                 <MenuItem value="کار">کار</MenuItem>
                 <MenuItem value="در حال انجام">در حال انجام</MenuItem>
-                <MenuItem value="انجام شد">انجام شد</MenuItem>
+                <MenuItem value="انجام شده">انجام شده</MenuItem>
               </Select>
             </FormControl>
             <Input

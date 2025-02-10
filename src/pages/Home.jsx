@@ -36,11 +36,9 @@ import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
 import EditTask from "../components/EditTask";
-import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
+import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import _date from "../utils/_date";
 import dayjs from "dayjs";
-
-
 
 // import EditTask from "../components/EditTask";
 
@@ -145,9 +143,8 @@ function Home() {
         name,
         priority,
         status,
-        date:_date(date),
+        date: _date(date),
       })
-
     );
     setDate(dayjs());
     setShowModal(false);
@@ -165,7 +162,7 @@ function Home() {
               aria-label="open drawer"
               sx={{ ml: 1 }}
             >
-            <ChecklistRtlIcon/>
+              <ChecklistRtlIcon />
             </IconButton>
             <Typography
               variant="h6"
@@ -229,22 +226,22 @@ function Home() {
         <Table sx={{ borderCollapse: "collapse" }}>
           <TableHead sx={{ background: "#d1d5dc" }}>
             <TableRow sx={{ border: "1px solid" }}>
-              <TableCell sx={{ border: "1px solid", textAlign: "right" }}>
-                #
+              <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
+                شماره
               </TableCell>
-              <TableCell sx={{ border: "1px solid", textAlign: "right" }}>
+              <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
                 نام{" "}
               </TableCell>
-              <TableCell sx={{ border: "1px solid", textAlign: "right" }}>
+              <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
                 اولویت
               </TableCell>
-              <TableCell sx={{ border: "1px solid", textAlign: "right" }}>
+              <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
                 وضعیت
               </TableCell>
-              <TableCell sx={{ border: "1px solid", textAlign: "right" }}>
+              <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
                 مهلت
               </TableCell>
-              <TableCell sx={{ border: "1px solid", textAlign: "right" }}>
+              <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
                 عملکرد
               </TableCell>
             </TableRow>
@@ -258,15 +255,81 @@ function Home() {
               })
               .map((task, index) => (
                 <TableRow key={task.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
+                  <TableCell sx={{textAlign:'center',borderLeft: "1px solid #9e9e9e"}}>{index + 1}</TableCell>
+                  <TableCell sx={{ textAlign: "center", borderLeft: "1px solid #9e9e9e" }}>
                     {task.name}
                   </TableCell>
-                  <TableCell>{task.priority}</TableCell>
-                  <TableCell>{task.status}</TableCell>
-                  <TableCell>{task.date}</TableCell>
+                  <TableCell sx={{borderLeft: "1px solid #9e9e9e"}}>
+                    <Box
+                      sx={{
+                        bgcolor:
+                          task.priority === "زیاد"
+                            ? "#f44336"
+                            : task.priority === "متوسط"
+                            ? "#ffc600"
+                            : task.priority === "کم" && "#9e9e9e",
+                        fontSize: "18px",
+                        textAlign: "center",
+                        color: "#fff",
+                        borderRadius: 2,
+                        pr: 3,
+                        pl: 3,
+                        pb: 1,
+                        pt: 1,
+                        
+                      }}
+                    >
+                      {task.priority}
+                    </Box>
+                  </TableCell>
+                  <TableCell sx={{borderLeft: "1px solid #9e9e9e"}}>
+                    <Box
+                      sx={{
+                        bgcolor:
+                          task.status === "کار"
+                            ? "#2196f3"
+                            : task.status === "در حال انجام"
+                            ? "#4caf50"
+                            : task.status === "انجام شده" && "#ff9800",
+                        fontSize: "18px",
+                        textAlign: "center",
+                        color: "#fff",
+                        borderRadius: 2,
+                        pr: 3,
+                        pl: 3,
+                        pb: 1,
+                        pt: 1,
+                        
+                      }}
+                    >
+                      {task.status}
+                    </Box>
+                  </TableCell>
+                  <TableCell sx={{borderLeft: "1px solid #9e9e9e"}}>
+                    <Box
+                      sx={{
+                        fontSize: "18px",
+                        textAlign: "center",
+                        borderRadius: 2,
+                        pr: 3,
+                        pl: 3,
+                        pb: 1,
+                        pt: 1,
+                      }}
+                    >
+                      {task.date}
+                    </Box>
+                  </TableCell>
                   <TableCell>
-                    <div>
+                    <div sx={{
+                        fontSize: "18px",
+                        textAlign: "center",
+                        borderRadius:2,
+                        pr:3,
+                        pl:3,
+                        pb:1,
+                        pt:1
+                      }}>
                       <Tooltip
                         sx={[
                           {
@@ -282,7 +345,7 @@ function Home() {
                         </IconButton>
                       </Tooltip>
 
-                      <EditTask showModal={showModal} setShowModal={setShowModal} task={task} />
+                      <EditTask task={task} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -290,6 +353,9 @@ function Home() {
           </TableHead>
         </Table>
       </TableContainer>
+
+
+      
 
       {/* اضافه کردن کار */}
 
@@ -356,22 +422,16 @@ function Home() {
                   >
                     <MenuItem value="کار">کار</MenuItem>
                     <MenuItem value="در حال انجام">در حال انجام</MenuItem>
-                    <MenuItem value="انجام شد">انجام شد</MenuItem>
+                    <MenuItem value="انجام شده">انجام شده</MenuItem>
                   </Select>
                 </FormControl>
 
-                
                 <input
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   type="date"
-                
                   name="date"
-                >
-
-                  
-                </input>
-               
+                ></input>
               </div>
               <Typography
                 sx={{
@@ -461,7 +521,7 @@ function Home() {
                           <MenuItem value="همه">همه</MenuItem>
                           <MenuItem value="کار">کار</MenuItem>
                           <MenuItem value="در حال انجام">در حال انجام</MenuItem>
-                          <MenuItem value="انجام">انجام</MenuItem>
+                          <MenuItem value="انجام شده">انجام شده</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
