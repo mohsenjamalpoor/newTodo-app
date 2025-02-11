@@ -112,12 +112,6 @@ function Home() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
 
-  
-
-
-
-  
-
   // صفحه بندی
 
   const handleChangePage = (event, newPage) => {
@@ -241,7 +235,6 @@ function Home() {
                 نام{" "}
               </TableCell>
               <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
-                
                 اولویت
               </TableCell>
               <TableCell sx={{ border: "1px solid", textAlign: "center" }}>
@@ -262,21 +255,34 @@ function Home() {
                   ? task
                   : task.name.toLocaleLowerCase().includes(search);
               })
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((task, index) => (
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((task, index) => (
                 <TableRow key={task.id}>
-                  <TableCell sx={{textAlign:'center',borderLeft: "1px solid #9e9e9e"}}>{index + 1}</TableCell>
-                  <TableCell sx={{ textAlign: "center", borderLeft: "1px solid #9e9e9e" }}>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      borderLeft: "1px solid #9e9e9e",
+                    }}
+                  >
+                    {index + 1}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      borderLeft: "1px solid #9e9e9e",
+                    }}
+                  >
                     {task.name}
                   </TableCell>
-                  <TableCell sx={{borderLeft: "1px solid #9e9e9e"}}>
+                  <TableCell sx={{ borderLeft: "1px solid #9e9e9e" }}>
                     <Box
                       sx={{
                         bgcolor:
                           task.priority === "زیاد"
                             ? "#f44336"
                             : task.priority === "متوسط"
-                            ? "#ffc600"
-                            : task.priority === "کم" && "#9e9e9e",
+                              ? "#ffc600"
+                              : task.priority === "کم" && "#9e9e9e",
                         fontSize: "18px",
                         textAlign: "center",
                         color: "#fff",
@@ -285,21 +291,20 @@ function Home() {
                         pl: 3,
                         pb: 1,
                         pt: 1,
-                        
                       }}
                     >
                       {task.priority}
                     </Box>
                   </TableCell>
-                  <TableCell sx={{borderLeft: "1px solid #9e9e9e"}}>
+                  <TableCell sx={{ borderLeft: "1px solid #9e9e9e" }}>
                     <Box
                       sx={{
                         bgcolor:
                           task.status === "کار"
                             ? "#2196f3"
                             : task.status === "در حال انجام"
-                            ? "#4caf50"
-                            : task.status === "انجام شده" && "#ff9800",
+                              ? "#4caf50"
+                              : task.status === "انجام شده" && "#ff9800",
                         fontSize: "18px",
                         textAlign: "center",
                         color: "#fff",
@@ -308,13 +313,12 @@ function Home() {
                         pl: 3,
                         pb: 1,
                         pt: 1,
-                       
                       }}
                     >
                       {task.status}
                     </Box>
                   </TableCell>
-                  <TableCell sx={{borderLeft: "1px solid #9e9e9e"}}>
+                  <TableCell sx={{ borderLeft: "1px solid #9e9e9e" }}>
                     <Box
                       sx={{
                         fontSize: "18px",
@@ -330,15 +334,17 @@ function Home() {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <div sx={{
+                    <div
+                      sx={{
                         fontSize: "18px",
                         textAlign: "center",
-                        borderRadius:2,
-                        pr:3,
-                        pl:3,
-                        pb:1,
-                        pt:1
-                      }}>
+                        borderRadius: 2,
+                        pr: 3,
+                        pl: 3,
+                        pb: 1,
+                        pt: 1,
+                      }}
+                    >
                       <Tooltip
                         sx={[
                           {
@@ -362,9 +368,6 @@ function Home() {
           </TableHead>
         </Table>
       </TableContainer>
-
-
-      
 
       {/* اضافه کردن کار */}
 
@@ -436,12 +439,12 @@ function Home() {
                 </FormControl>
 
                 <Input
-              sx={{ height: "47px" }}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              type="date"
-              name="date"
-            />
+                  sx={{ height: "47px" }}
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  type="date"
+                  name="date"
+                />
               </div>
               <Typography
                 sx={{
@@ -477,7 +480,12 @@ function Home() {
             <ListItem>
               <div>
                 <div>
-                  <IconButton size="small">
+                  <IconButton
+                    sx={{
+                      bgcolor: "#2196f3",
+                    }}
+                    size="small"
+                  >
                     <FilterAltOutlinedIcon />
                   </IconButton>
 
@@ -492,29 +500,28 @@ function Home() {
                       لیست کار های من
                     </h3>
                     <Typography
-                     sx={{
-                      fontWeight: "light",
-                      fontSize: "14px",
-                      textAlign: "center",
-                    }}
-                    variant="h2">
-
-                    فیلتر ها
+                      sx={{
+                        fontWeight: "light",
+                        fontSize: "14px",
+                        textAlign: "center",
+                        pt: 2,
+                      }}
+                      variant="h2"
+                    >
+                      فیلتر ها
                     </Typography>
-                   
                   </div>
                 </div>
-                 
 
-                    <Divider sx={{ my: 2 }} />
+                <Divider sx={{ my: 2 }} />
 
                 <div>
                   <div>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                      <InputLabel id="demo-simple-select-helper-label">اولویت</InputLabel>
+                      <InputLabel id="demo-simple-select-helper-label">
+                        اولویت
+                      </InputLabel>
                       <Select
-                       
-                   
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="اولویت"
@@ -545,7 +552,6 @@ function Home() {
                   </div>
 
                   <Button
-                  
                     sx={{
                       display: "flex",
                       textAlign: "center",
@@ -564,7 +570,6 @@ function Home() {
 
       <TablePagination
         rowsPerPageOptions={[5, 10, 15]}
-
         component="div"
         count={tasks.length}
         page={page}
@@ -572,8 +577,13 @@ function Home() {
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelDisplayedRows={({from, to, count}) => `${from} - ${to} از ${count}` }
-        sx={{direction:'rtl', "& .MuiTablePagination-actions":{direction:"ltr"}}}
+        labelDisplayedRows={({ from, to, count }) =>
+          `${from} - ${to} از ${count}`
+        }
+        sx={{
+          direction: "rtl",
+          "& .MuiTablePagination-actions": { direction: "ltr" },
+        }}
       />
     </>
   );

@@ -142,7 +142,7 @@ function EditTask({ task }) {
                 },
               },
             ]}
-            title="Edit"
+            title="ویرایش"
           >
             <IconButton onClick={() => setIsEditing(true)}>
               <EditIcon />
