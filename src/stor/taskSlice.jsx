@@ -2,11 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import { taskList } from "../statics/Data";
 
+
 const taskSlice = createSlice({
   name: "tasks",
-
   initialState: taskList,
-
   reducers: {
     addTask: (state, action) => {
       console.log("------>>", state, action);
@@ -29,7 +28,8 @@ const taskSlice = createSlice({
         return state.filter((f) => f.id !== id);
       }
     },
+    resetFilters:() => taskList,
   },
 });
-export const { addTask, editTask, deleteTask } = taskSlice.actions;
+export const { addTask, editTask, deleteTask, resetFilters } = taskSlice.actions;
 export default taskSlice.reducer;

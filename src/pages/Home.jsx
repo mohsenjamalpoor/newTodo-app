@@ -33,7 +33,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 // import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import { addTask, deleteTask } from "../stor/taskSlice";
+import { addTask, deleteTask, resetFilters } from "../stor/taskSlice";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
@@ -107,6 +107,8 @@ function Home() {
   const [date, setDate] = useState(dayjs());
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
+  const [filterStatus, setFilterStatus] = useState("همه");
+  const [filterPriority, setFilterPriority] = useState("همه");
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -132,6 +134,12 @@ function Home() {
   //  فیلتر کردن
   const toggleDrawer = (newFilter) => () => {
     setFilter(newFilter);
+  };
+
+  const handelReset = () => {
+    dispatch(resetFilters());
+    // setFilterStatus("");
+    // setFilterPriority("");
   };
 
   const tasks = useSelector((state) => state.tasks);
@@ -255,7 +263,16 @@ function Home() {
                   ? task
                   : task.name.toLocaleLowerCase().includes(search);
               })
+
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .filter((task) =>
+                filterStatus === "همه" ? true : task.status === filterStatus
+              )
+              .filter((task) =>
+                filterPriority === "همه"
+                  ? true
+                  : task.priority === filterPriority
+              )
               .map((task, index) => (
                 <TableRow key={task.id}>
                   <TableCell
@@ -266,6 +283,7 @@ function Home() {
                   >
                     {index + 1}
                   </TableCell>
+
                   <TableCell
                     sx={{
                       textAlign: "center",
@@ -522,6 +540,8 @@ function Home() {
                         اولویت
                       </InputLabel>
                       <Select
+                        onChange={(e) => setFilterPriority(e.target.value)}
+                        value={filterPriority}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="اولویت"
@@ -538,6 +558,8 @@ function Home() {
                           وضعیت
                         </InputLabel>
                         <Select
+                          onChange={(e) => setFilterStatus(e.target.value)}
+                          value={filterStatus}
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
                           label="وضعیت"
@@ -552,6 +574,7 @@ function Home() {
                   </div>
 
                   <Button
+                    onClick={handelReset}
                     sx={{
                       display: "flex",
                       textAlign: "center",
@@ -559,7 +582,7 @@ function Home() {
                     }}
                     variant="contained"
                   >
-                    reset
+                    ریست کردن
                   </Button>
                 </div>
               </div>
