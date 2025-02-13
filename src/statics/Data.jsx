@@ -6,5 +6,12 @@ export const taskList = [
         status:"انجام شده",
         date:"03/11/17"
        
+    }, {
+        id:2,
+        name:"حسن",
+        priority:"زیاد",
+        status:"در حال انجام",
+        date:"03/11/19"
+       
     }
 ]

@@ -33,7 +33,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 // import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import { addTask, deleteTask, resetFilters } from "../stor/taskSlice";
+import { addTask, deleteTask } from "../stor/taskSlice";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
@@ -136,11 +136,11 @@ function Home() {
     setFilter(newFilter);
   };
 
-  const handelReset = () => {
-    dispatch(resetFilters());
-    // setFilterStatus("");
-    // setFilterPriority("");
-  };
+  // const handelReset = () => {
+  //   // dispatch(resetFilters());
+  //   setFilterStatus("");
+  //   setFilterPriority("");
+  // };
 
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
@@ -156,7 +156,7 @@ function Home() {
         date: _date(date),
       })
     );
-    setDate(dayjs());
+    setDate(dayjs().calendar("jalali").format('YYYY/MM/DD'));
     setShowModal(false);
   };
 
@@ -573,7 +573,7 @@ function Home() {
                     </div>
                   </div>
 
-                  <Button
+                  {/* <Button
                     onClick={handelReset}
                     sx={{
                       display: "flex",
@@ -583,7 +583,7 @@ function Home() {
                     variant="contained"
                   >
                     ریست کردن
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </ListItem>
