@@ -33,7 +33,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 // import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import { addTask, deleteTask } from "../stor/taskSlice";
+import { addTask, deleteTask } from "../store/taskSlice";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 import { TablePagination } from "@mui/material";
@@ -136,11 +136,7 @@ function Home() {
     setFilter(newFilter);
   };
 
-  // const handelReset = () => {
-  //   // dispatch(resetFilters());
-  //   setFilterStatus("");
-  //   setFilterPriority("");
-  // };
+  
 
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
@@ -573,17 +569,7 @@ function Home() {
                     </div>
                   </div>
 
-                  {/* <Button
-                    onClick={handelReset}
-                    sx={{
-                      display: "flex",
-                      textAlign: "center",
-                      mr: "35px",
-                    }}
-                    variant="contained"
-                  >
-                    ریست کردن
-                  </Button> */}
+                 
                 </div>
               </div>
             </ListItem>

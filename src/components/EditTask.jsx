@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 
 // import { MdEdit } from "react-icons/md";
-import { editTask } from "../stor/taskSlice";
+import { editTask } from "../store/taskSlice";
 import {
   Box,
   Button,
